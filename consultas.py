@@ -1,13 +1,15 @@
+import sqlite3
+import pandas as pd
 conn = sqlite3.connect('ventas.db')
 
-# a. Total de ventas por categoría
+
 print(pd.read_sql_query('''
 SELECT categoria, SUM(total) AS total_ventas
 FROM ventas
 GROUP BY categoria
 ''', conn))
 
-# b. Top 5 productos más vendidos
+
 print(pd.read_sql_query('''
 SELECT producto, SUM(cantidad) AS unidades_vendidas
 FROM ventas
@@ -16,7 +18,7 @@ ORDER BY unidades_vendidas DESC
 LIMIT 5
 ''', conn))
 
-# c. Mes con mayor facturación
+
 print(pd.read_sql_query('''
 SELECT strftime('%Y-%m', fecha) AS mes, SUM(total) AS facturacion
 FROM ventas
